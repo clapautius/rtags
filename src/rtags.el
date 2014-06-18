@@ -643,7 +643,7 @@ BUFFER : the buffer to be checked and reparsed, if it's nil, use current buffer"
     (if (not (equal "" input))
         (setq tagname input))
     (with-current-buffer (rtags-get-buffer)
-      (rtags-call-rc :path path switch tagname :path-filter filter :path-filter-regex regexp-filter)
+      (rtags-call-rc :path path switch tagname :path-filter filter :path-filter-regex regexp-filter (if rtags-symbolnames-case-insensitive "-I"))
       (rtags-reset-bookmarks)
       (rtags-handle-results-buffer))))
 
@@ -908,11 +908,10 @@ If called with a prefix restrict to current buffer"
   (interactive "P")
   (rtags-location-stack-push)
   (let ((arg (rtags-current-location))
-        (fn (buffer-file-name))
-        (context (rtags-current-symbol t)))
+        (fn (buffer-file-name)))
     (rtags-reparse-file-if-needed)
     (with-current-buffer (rtags-get-buffer)
-      (rtags-call-rc :path fn :context context :path-filter prefix "-f" arg)
+      (rtags-call-rc :path fn :path-filter prefix "-f" arg)
       (rtags-handle-results-buffer))))
 
 ;;;###autoload
