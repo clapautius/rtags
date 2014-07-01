@@ -2031,12 +2031,14 @@ definition."
     (kill-buffer "*rdm*")))
 
 (defun rtags-restart-process ()
+  (interactive)
   "Restart the rtags process (rdm)."
   (rtags-cancel-process)
   (rtags-start-process-maybe))
 
 (defun rtags-start-process-maybe ()
   "Launch the rtags process (rdm) if it's not already started."
+  (interactive)
   (let ((rtags-server-executable (rtags-executable-find "rdm")))
     (cond
      ;; Already stated, nothing need to be done
